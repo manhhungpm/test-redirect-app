@@ -22,7 +22,7 @@
   
     if (isiOS || isAndroid) {
      
-      document.getElementById('loader').src = 'custom-protocol://my-app'+window.location.search+window.location.hash;
+      document.getElementById('loader').src = 'com.vpbank.myvpbank://my-app'+window.location.search+window.location.hash;
 
       
       fallbackLink = isAndroid ? 'https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US' :
