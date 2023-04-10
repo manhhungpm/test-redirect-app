@@ -11,28 +11,26 @@
 
   <script>(function(){
 
-   
-    var fallbackLink = 'http://example.com/my-web-app/'+window.location.search+window.location.hash;
-
-
-
-    var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod'),
-        isAndroid = navigator.userAgent.match('Android');
-
-  
-    if (isiOS || isAndroid) {
-     
-      //document.getElementById('loader').src = 'com.vpbank.myvpbank://com.vpbank.myvpbank'+window.location.search+window.location.hash;
-      document.getElementById('loader').src = 'com.vpbank.myvpbank://';
-
+    //1
+//     var fallbackLink = 'http://example.com/my-web-app/'+window.location.search+window.location.hash;
+//     var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod'),
+//         isAndroid = navigator.userAgent.match('Android');
+//     if (isiOS || isAndroid) {
+//       //document.getElementById('loader').src = 'com.vpbank.myvpbank://com.vpbank.myvpbank'+window.location.search+window.location.hash;
+//       document.getElementById('loader').src = 'com.vpbank.myvpbank://';
+//       fallbackLink = isAndroid ? 'https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US' :
+//                                  'itms-apps://itunes.apple.com/app/myvpbank/id1661762590' ;
+//     }
+//     window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
+    //--
       
-      fallbackLink = isAndroid ? 'https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US' :
-                                 'itms-apps://itunes.apple.com/app/myvpbank/id1661762590' ;
-    }
-
-    
-    window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
-
+      
+      //2
+      setTimeout(function () { window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590"; }, 25);
+      window.location = "appname://";
+      //--
+      
+      
 
 
   })();</script>
