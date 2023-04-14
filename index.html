@@ -8,6 +8,10 @@
 
 
   <iframe style="display:none" height="0" width="0" id="loader"></iframe>
+  
+  <a href=”myvpbank://myvpbank”>Click me</a>
+
+
 
   <script>
     function getParameterByName(name, url) {
@@ -43,24 +47,24 @@
 
 
     //3
-    var fallbackLink = getParameterByName('redirect_url') ? getParameterByName('redirect_url') : 'http://example.com/my-web-app/';
-    var androidCustomProtocol = getParameterByName('android_custom_protocol');
-    var iosCustomProtocol = getParameterByName('ios_custom_protocol');
-    var androidStore = getParameterByName('android_store');
-    var iosStore = getParameterByName('ios_store');
+//     var fallbackLink = getParameterByName('redirect_url') ? getParameterByName('redirect_url') : 'http://example.com/my-web-app/';
+//     var androidCustomProtocol = getParameterByName('android_custom_protocol');
+//     var iosCustomProtocol = getParameterByName('ios_custom_protocol');
+//     var androidStore = getParameterByName('android_store');
+//     var iosStore = getParameterByName('ios_store');
 
-    var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod');
-    var isAndroid = navigator.userAgent.match('Android');
+//     var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod');
+//     var isAndroid = navigator.userAgent.match('Android');
 
-    if(isiOS) {
-      setTimeout(function () { window.location = iosStore; }, 25);
-      window.location = iosCustomProtocol;
-    } else if (isAndroid) {
-      setTimeout(function () { window.location = androidStore; }, 1000);
-      window.location = androidCustomProtocol;
-    } else {
-      window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
-    }
+//     if(isiOS) {
+//       setTimeout(function () { window.location = iosStore; }, 25);
+//       window.location = iosCustomProtocol;
+//     } else if (isAndroid) {
+//       setTimeout(function () { window.location = androidStore; }, 1000);
+//       window.location = androidCustomProtocol;
+//     } else {
+//       window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
+//     }
 
     })();
   </script>
