@@ -33,6 +33,7 @@
         })
         .catch(error => {
           // App is not installed, so open Play Store
+          alert(error)
           window.location.href = playStoreUrl;
     });
 }
