@@ -8,13 +8,6 @@
 
 
   <iframe style="display:none" height="0" width="0" id="loader"></iframe>
-  
-  <a href="myvpbank://myvpbank">Deep link</a>
-  
-  <a href="https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&referrer=utm_source%3Dtest_source%26utm_medium%3Dtest_medium%26utm_term%3Dtest-term%26utm_content%3Dtest_content%26utm_campaign%3Dtest_name">Click android store</a>
-
-  <a href="itms-apps://itunes.apple.com/app/myvpbank/id1661762590">Click app store</a>
-
 
   <script>
     function getParameterByName(name, url) {
@@ -26,6 +19,23 @@
       if (!results[2]) return '';
       return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
+
+
+    function openApp(packageName) {
+      const playStoreUrl = `https://play.google.com/store/apps/details?id=${packageName}`
+      const intentUrl = `intent://${packageName}#Intent;scheme=package;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;end;`
+
+      fetch(intentUrl)
+        .then(response => {
+          // App is installed, so open it
+          alert(response)
+          window.location.href = 'myvpbank://myvpbank';
+        })
+        .catch(error => {
+          // App is not installed, so open Play Store
+          window.location.href = playStoreUrl;
+    });
+}
 
     (function(){
 
@@ -50,24 +60,24 @@
 
 
     //3
-//     var fallbackLink = getParameterByName('redirect_url') ? getParameterByName('redirect_url') : 'http://example.com/my-web-app/';
-//     var androidCustomProtocol = getParameterByName('android_custom_protocol');
-//     var iosCustomProtocol = getParameterByName('ios_custom_protocol');
-//     var androidStore = getParameterByName('android_store');
-//     var iosStore = getParameterByName('ios_store');
+    var fallbackLink = getParameterByName('redirect_url') ? getParameterByName('redirect_url') : 'http://example.com/my-web-app/';
+    var customProtocol = getParameterByName('custom_protocol');
+    var androidStore = getParameterByName('android_store');
+    var iosStore = getParameterByName('ios_store');
 
-//     var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod');
-//     var isAndroid = navigator.userAgent.match('Android');
+    var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod');
+    var isAndroid = navigator.userAgent.match('Android');
 
-//     if(isiOS) {
-//       setTimeout(function () { window.location = iosStore; }, 25);
-//       window.location = iosCustomProtocol;
-//     } else if (isAndroid) {
-//       setTimeout(function () { window.location = androidStore; }, 1000);
-//       window.location = androidCustomProtocol;
-//     } else {
-//       window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
-//     }
+    if(isiOS) {
+      setTimeout(function () { window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590"; }, 25);
+      window.location = "myvpbank://myvpbank";
+    } else if (isAndroid) {
+      // setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US"; }, 1000);
+      // window.location = "myvpbank://myvpbank";
+      openApp('com.linkid')
+    } else {
+      window.setTimeout(function (){ window.location.replace('http://example.com/my-web-app/'); }, 1);
+    }
 
     })();
   </script>
