@@ -81,10 +81,10 @@
 
     if(isApple) {
       setTimeout(function () { window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590"; }, 25);
-      window.location = iosCustomProtocol;
+      window.location = "myvpbank://myvpbank";
     } else if (isAndroid) {
       setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US"; }, 1000);
-      window.location = androidCustomProtocol;
+      window.location = "myvpbank://myvpbank";
     } else {
       window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
     }
