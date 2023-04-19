@@ -29,9 +29,8 @@
     }
 
     function isAndroid() {
-            return navigator.userAgent.match('Android');
-
-	    //return navigator.userAgent.indexOf('Android') > 0;
+      return navigator.userAgent.match('Android');
+	    // return navigator.userAgent.indexOf('Android') > 0;
     }
 
     function isBrowser() {
@@ -46,12 +45,30 @@
       return document["hidden"] || document["mozHidden"] || document["webkitHidden"] || document["msHidden"];
     }
 
+    function getAndroidDelayTimeForCloseWindow(ua) {
+      // Note: new window will be auto-closed by browser/chrome if app is started (experiment result).
+      // So we can use that to decide whether to do onFail().
+      // The error message of native browser will still be shown to the user for about 0.5 seconds.
+      // But this is the best we can achieve.
+      // Special handling for different devices:
+      // 1. Samsung DUOS: Chrome on it needs 1 second timeout. Built-in browser works fine with 500, but we just force for both.
+      // 2. XiaoMi: 0.8s.
+      // 3. Samsung Note + Chrome needs 5s to open app
+      if(ua.indexOf('SM-G130H') >= 0) {
+        return 1000;
+      }
+      if(ua.indexOf('XiaoMi') >= 0) {
+        return 800;
+      }
+      if(ua.indexOf('SM-N9005') >= 0 && ua.indexOf('Chrome/39') >= 0) {
+        return 5000;
+      }
+      return 500;
+    }
+
 
     function autoOpen(){
-      if(isApple){
-        var userActionTimeout = 3000;
-        var autoActionTimeout = 5000;
-      }
+     
     }
 
     
@@ -62,25 +79,14 @@
   <iframe style="display:none" height="0" width="0" id="loader"></iframe>
   <script>
 
-    
     if(isApple) {
       setTimeout(function () { window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590"; }, 25);
-      window.location = "myvpbank://myvpbank";
+      window.location = iosCustomProtocol;
     } else if (isAndroid) {
-
-      window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US";
-	    
-//       var timeOutAndroid = setTimeout(function () { 
-//         // if(!document.hidden || !document.webkitHidden){
-//           window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US"; 
-//         // }
-//       }, 2000);
-
-      
-      //clearTimeout(timeOutAndroid)
-
+      setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US"; }, 1000);
+      window.location = androidCustomProtocol;
     } else {
-      window.setTimeout(function (){ window.location.replace('http://example.com/my-web-app/'); }, 1);
+      window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
     }
 
   </script>
