@@ -80,11 +80,35 @@
   <script>
 
     if(isApple) {
-      setTimeout(function () { window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590"; }, 25);
+      // setTimeout(function () { window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590"; }, 25);
+      // window.location = "myvpbank://myvpbank";
+      
+
+      setTimeout(function() {
+          if (document.webkitHidden || document.hidden) {
+            // User switched to a different app or home screen
+          return;
+          }
+          window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590";
+      }, 2000); // Wait for 2 seconds before redirecting to fallback URL
+  
       window.location = "myvpbank://myvpbank";
     } else if (isAndroid) {
-      setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US"; }, 1000);
+      // setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US"; }, 1000);
+      // window.location = "myvpbank://myvpbank";
+
+
+
+      setTimeout(function() {
+          if (document.webkitHidden || document.hidden) {
+            // User switched to a different app or home screen
+          return;
+          }
+          window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US";
+      }, 2000); // Wait for 2 seconds before redirecting to fallback URL
+  
       window.location = "myvpbank://myvpbank";
+
     } else {
       window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
     }
