@@ -98,14 +98,15 @@
       // window.location = "myvpbank://myvpbank";
 
 
-      var ua = navigator.userAgent;
+      
       setTimeout(function() {
           if (document.webkitHidden || document.hidden) {
             // User switched to a different app or home screen
           return;
-          }
+          } else {
           window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US";
-      }, 1000); // Wait for 2 seconds before redirecting to fallback URL
+        }
+      },1000); // Wait for 2 seconds before redirecting to fallback URL
   
       window.location = "myvpbank://myvpbank";
 
