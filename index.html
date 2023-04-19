@@ -3,11 +3,6 @@
 <head>
   <meta charset="utf-8">
   <title>App Redirection</title>
-</head>
-<body>
-
-
-  <iframe style="display:none" height="0" width="0" id="loader"></iframe>
 
   <script>
     function getParameterByName(name, url) {
@@ -21,70 +16,74 @@
     }
 
 
-    function openApp(packageName) {
-      const playStoreUrl = `https://play.google.com/store/apps/details?id=${packageName}`
-      const intentUrl = `intent://${packageName}#Intent;scheme=package;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;end;`
-
-      fetch(intentUrl)
-        .then(response => {
-          // App is installed, so open it
-          alert(response)
-          window.location.href = 'myvpbank://myvpbank';
-        })
-        .catch(error => {
-          // App is not installed, so open Play Store
-          window.location.href = playStoreUrl;
-    });
-}
-
-    (function(){
-
-    //1
-    // var fallbackLink = 'http://example.com/my-web-app/'+window.location.search+window.location.hash;
-    // var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod'),
-    //     isAndroid = navigator.userAgent.match('Android');
-    // if (isiOS || isAndroid) {
-    //   //document.getElementById('loader').src = 'com.vpbank.myvpbank://com.vpbank.myvpbank'+window.location.search+window.location.hash;
-    //   document.getElementById('loader').src = 'com.vpbank.myvpbank://';
-    //   fallbackLink = isAndroid ? 'https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US' :
-    //                              'itms-apps://itunes.apple.com/app/myvpbank/id1661762590' ;
-    // }
-    // window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
-    //--
-
-
-    //2
-    // setTimeout(function () { window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590"; }, 25);
-    // window.location = "com.vpbank.myvpbank://";
-    //--
-
-
-    //3
+    //Get param from long link
     var fallbackLink = getParameterByName('redirect_url') ? getParameterByName('redirect_url') : 'http://example.com/my-web-app/';
     var customProtocol = getParameterByName('custom_protocol');
     var androidStore = getParameterByName('android_store');
     var iosStore = getParameterByName('ios_store');
 
-    var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod');
-    var isAndroid = navigator.userAgent.match('Android');
 
+    function isApple() {
+      // var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod');
+	    return navigator.userAgent.indexOf('iPhone') > 0 || navigator.userAgent.indexOf('iPad') > 0;
+    }
+
+    function isAndroid() {
+      // var isAndroid = navigator.userAgent.match('Android');
+	    return navigator.userAgent.indexOf('Android') > 0;
+    }
+
+    function isBrowser() {
+      var ua = navigator.userAgent;
+      if (isApple()) {
+        return ua.indexOf('Safari/') > 0;
+      }
+      return ua.indexOf('Chrome/') > 0 && ua.indexOf('Chrome/30.0') < 0;
+    }
+
+    function isPageHidden() {
+      return document["hidden"] || document["mozHidden"] || document["webkitHidden"] || document["msHidden"];
+    }
+
+
+    function autoOpen(){
+      if(isApple){
+        var userActionTimeout = 3000;
+        var autoActionTimeout = 5000;
+      }
+    }
+
+    
+  </script>
+</head>
+<body>
+
+  <h3>Redirect app</h3>
+  <script>
+
+    
     if(isiOS) {
       setTimeout(function () { window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590"; }, 25);
       window.location = "myvpbank://myvpbank";
     } else if (isAndroid) {
+
+
       window.location = "myvpbank://myvpbank";
+
       
-      setTimeout(function () { 
-        //if(document.hidden || document.webkitHidden){
+      var timeOutAndroid = setTimeout(function () { 
+        if(!document.hidden || !document.webkitHidden){
           window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US"; 
-        //}
+        }
       }, 2000);
-      // openApp('com.linkid')
+
+      
+      // clearTimeout(timeOutAndroid)
+
     } else {
       window.setTimeout(function (){ window.location.replace('http://example.com/my-web-app/'); }, 1);
     }
 
-    })();
   </script>
 </body>
 </html>
