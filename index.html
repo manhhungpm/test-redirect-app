@@ -92,7 +92,7 @@
           return;
         }
         window.location = fallbackUrl;
-      }, getAndroidDelayTimeForCloseWindow(userAgent)); // Wait for 2 seconds before redirecting to fallback URL
+      }, 2000); // Wait for 2 seconds before redirecting to fallback URL
 
       window.location = appUrl;
     }
