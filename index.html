@@ -29,46 +29,8 @@
     }
 
     function isAndroid() {
-      return navigator.userAgent.match('Android');
-	    // return navigator.userAgent.indexOf('Android') > 0;
-    }
-
-    function isBrowser() {
-      var ua = navigator.userAgent;
-      if (isApple()) {
-        return ua.indexOf('Safari/') > 0;
-      }
-      return ua.indexOf('Chrome/') > 0 && ua.indexOf('Chrome/30.0') < 0;
-    }
-
-    function isPageHidden() {
-      return document["hidden"] || document["mozHidden"] || document["webkitHidden"] || document["msHidden"];
-    }
-
-    function getAndroidDelayTimeForCloseWindow(ua) {
-      // Note: new window will be auto-closed by browser/chrome if app is started (experiment result).
-      // So we can use that to decide whether to do onFail().
-      // The error message of native browser will still be shown to the user for about 0.5 seconds.
-      // But this is the best we can achieve.
-      // Special handling for different devices:
-      // 1. Samsung DUOS: Chrome on it needs 1 second timeout. Built-in browser works fine with 500, but we just force for both.
-      // 2. XiaoMi: 0.8s.
-      // 3. Samsung Note + Chrome needs 5s to open app
-      if(ua.indexOf('SM-G130H') >= 0) {
-        return 1000;
-      }
-      if(ua.indexOf('XiaoMi') >= 0) {
-        return 800;
-      }
-      if(ua.indexOf('SM-N9005') >= 0 && ua.indexOf('Chrome/39') >= 0) {
-        return 5000;
-      }
-      return 500;
-    }
-
-
-    function autoOpen(){
-     
+      //return navigator.userAgent.match('Android');
+	    return navigator.userAgent.indexOf('Android') > 0;
     }
 
 
@@ -104,44 +66,6 @@
 
   <iframe style="display:none" height="0" width="0" id="loader"></iframe>
   <script>
-
-    // if(isApple) {
-    //   // setTimeout(function () { window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590"; }, 25);
-    //   // window.location = "myvpbank://myvpbank";
-      
-
-    //   setTimeout(function() {
-    //       if (document.webkitHidden || document.hidden) {
-    //         // User switched to a different app or home screen
-    //       return;
-    //       }
-    //       window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590";
-    //   }, 2000); // Wait for 2 seconds before redirecting to fallback URL
-  
-    //   window.location = "myvpbank://myvpbank";
-    // } else if (isAndroid) {
-    //   // setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US"; }, 1000);
-    //   // window.location = "myvpbank://myvpbank";
-
-
-      
-    //   setTimeout(function() {
-    //       if (document.webkitHidden || document.hidden) {
-    //         // User switched to a different app or home screen
-    //         window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US";
-
-    //       return;
-    //       } else {
-    //       window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US";
-    //     }
-    //   },1000); // Wait for 2 seconds before redirecting to fallback URL
-  
-    //   window.location = "myvpbank://myvpbank";
-
-    // } else {
-    //   window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
-    // }
-
 
     redirectToApp()
 
