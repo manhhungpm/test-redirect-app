@@ -71,6 +71,32 @@
      
     }
 
+
+    function redirectToApp() {
+      var appUrl = "myvpbank://myvpbank";
+      var fallbackUrl = "";
+      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      // Check if user is using an iOS device
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        fallbackUrl = "https://apps.apple.com/us/app/myapp/1661762590";
+      }
+      // Check if user is using an Android device
+      else if (/android/i.test(userAgent)) {
+        fallbackUrl = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank";
+      }
+
+      setTimeout(function() {
+        if (document.webkitHidden || document.hidden) {
+          // User switched to a different app or home screen
+          return;
+        }
+        window.location = fallbackUrl;
+      }, 2000); // Wait for 2 seconds before redirecting to fallback URL
+
+      window.location = appUrl;
+    }
+
     
   </script>
 </head>
@@ -79,42 +105,45 @@
   <iframe style="display:none" height="0" width="0" id="loader"></iframe>
   <script>
 
-    if(isApple) {
-      // setTimeout(function () { window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590"; }, 25);
-      // window.location = "myvpbank://myvpbank";
+    // if(isApple) {
+    //   // setTimeout(function () { window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590"; }, 25);
+    //   // window.location = "myvpbank://myvpbank";
       
 
-      setTimeout(function() {
-          if (document.webkitHidden || document.hidden) {
-            // User switched to a different app or home screen
-          return;
-          }
-          window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590";
-      }, 2000); // Wait for 2 seconds before redirecting to fallback URL
+    //   setTimeout(function() {
+    //       if (document.webkitHidden || document.hidden) {
+    //         // User switched to a different app or home screen
+    //       return;
+    //       }
+    //       window.location = "itms-apps://itunes.apple.com/app/myvpbank/id1661762590";
+    //   }, 2000); // Wait for 2 seconds before redirecting to fallback URL
   
-      window.location = "myvpbank://myvpbank";
-    } else if (isAndroid) {
-      // setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US"; }, 1000);
-      // window.location = "myvpbank://myvpbank";
+    //   window.location = "myvpbank://myvpbank";
+    // } else if (isAndroid) {
+    //   // setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US"; }, 1000);
+    //   // window.location = "myvpbank://myvpbank";
 
 
       
-      setTimeout(function() {
-          if (document.webkitHidden || document.hidden) {
-            // User switched to a different app or home screen
-            window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US";
+    //   setTimeout(function() {
+    //       if (document.webkitHidden || document.hidden) {
+    //         // User switched to a different app or home screen
+    //         window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US";
 
-          return;
-          } else {
-          window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US";
-        }
-      },1000); // Wait for 2 seconds before redirecting to fallback URL
+    //       return;
+    //       } else {
+    //       window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US";
+    //     }
+    //   },1000); // Wait for 2 seconds before redirecting to fallback URL
   
-      window.location = "myvpbank://myvpbank";
+    //   window.location = "myvpbank://myvpbank";
 
-    } else {
-      window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
-    }
+    // } else {
+    //   window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
+    // }
+
+
+    redirectToApp()
 
   </script>
 </body>
