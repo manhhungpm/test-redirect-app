@@ -105,7 +105,7 @@
           return;
           }
           window.location = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank&hl=vi&gl=US";
-      }, getAndroidDelayTimeForCloseWindow(ua)); // Wait for 2 seconds before redirecting to fallback URL
+      }, 1000); // Wait for 2 seconds before redirecting to fallback URL
   
       window.location = "myvpbank://myvpbank";
 
