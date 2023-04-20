@@ -17,8 +17,9 @@
 
 
     //Get param from long link
-    var fallbackLink = getParameterByName('redirect_url') ? getParameterByName('redirect_url') : 'http://example.com/my-web-app/';
-    var customProtocol = getParameterByName('custom_protocol');
+    var urlRedirect = getParameterByName('redirect_url') ? getParameterByName('redirect_url') : 'http://example.com/my-web-app/';
+    var iosProtocol = getParameterByName('ios_custom_protocol');
+    var androidProtocol = getParameterByName('android_custom_protocol');
     var androidStore = getParameterByName('android_store');
     var iosStore = getParameterByName('ios_store');
 
@@ -33,19 +34,37 @@
 	    return navigator.userAgent.indexOf('Android') > 0;
     }
 
+    function isBrowser() {
+      var ua = navigator.userAgent;
+      if (isApple()) {
+        return ua.indexOf('Safari/') > 0;
+      }
+      return ua.indexOf('Chrome/') > 0 && ua.indexOf('Chrome/30.0') < 0;
+    }
+
+    function subStringParam(str){
+      var index = str.indexOf('code'); //Cac tham so bat dau tu ?code=  nen tach tu str code tro di
+
+      return str.substring(index);
+    }
+
 
     function redirectToApp() {
-      var appUrl = "myvpbank://myvpbank";
+      var customSchema = "";
       var fallbackUrl = "";
-      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-      // Check if user is using an iOS device
-      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        fallbackUrl = "https://apps.apple.com/us/app/myapp/1661762590";
-      }
-      // Check if user is using an Android device
-      else if (/android/i.test(userAgent)) {
-        fallbackUrl = "https://play.google.com/store/apps/details?id=com.vpbank.myvpbank";
+      var currentUrl = window.location.href
+      var param = subStringParam(currentUrl)
+
+      if (isApple()) {
+        fallbackUrl = iosStore + "&referrer=" + encodeURIComponent(iosProtocol + "?"+ param);
+        customSchema = iosProtocol + "?" + param
+      } else if (isAndroid()) {
+        fallbackUrl = androidStore + "&referrer=" + encodeURIComponent(androidProtocol + "?"+ param);
+        customSchema = androidProtocol + "?" + param
+      } else if (isBrowser()) {
+        // console.log(androidStore + "&referrer=" + encodeURIComponent(androidProtocol + "?"+ param))
+        fallbackUrl = urlRedirect;
       }
 
       setTimeout(function() {
@@ -56,7 +75,7 @@
         window.location = fallbackUrl;
       }, 2000); // Wait for 2 seconds before redirecting to fallback URL
 
-      window.location = appUrl;
+      window.location = customSchema;
     }
 
     
@@ -66,7 +85,7 @@
 
   <iframe style="display:none" height="0" width="0" id="loader"></iframe>
   <script>
-
+// console.log(window.location.href)
     redirectToApp()
 
   </script>
