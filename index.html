@@ -57,17 +57,11 @@
       var param = subStringParam(currentUrl)
 
       if (isApple()) {
-        fallbackUrl = iosStore + "&referrer=" + encodeURIComponent(iosProtocol + "?"+ param);
+        fallbackUrl = iosStore + "?referrer=" + encodeURIComponent(iosProtocol + "?"+ param);
         customSchema = iosProtocol + "?" + param
-      } else if (isAndroid()) {
-        fallbackUrl = androidStore + "&referrer=" + encodeURIComponent(androidProtocol + "?"+ param);
-        customSchema = androidProtocol + "?" + param
-      } else if (isBrowser()) {
-        // console.log(androidStore + "&referrer=" + encodeURIComponent(androidProtocol + "?"+ param))
-        fallbackUrl = urlRedirect;
-      }
 
-      setTimeout(function() {
+
+        setTimeout(function() {
         if (document.webkitHidden || document.hidden) {
           // User switched to a different app or home screen
           return;
@@ -76,6 +70,35 @@
       }, 2000); // Wait for 2 seconds before redirecting to fallback URL
 
       window.location = customSchema;
+      } else if (isAndroid()) {
+        fallbackUrl = androidStore + "&referrer=" + encodeURIComponent(androidProtocol + "?"+ param);
+        customSchema = androidProtocol + "?" + param
+
+        setTimeout(function() {
+        if (document.webkitHidden || document.hidden) {
+          // User switched to a different app or home screen
+          return;
+        }
+        window.location = fallbackUrl;
+      }, 2000); // Wait for 2 seconds before redirecting to fallback URL
+
+      window.location = customSchema;
+      } else  {
+        console.log((urlRedirect))
+        fallbackUrl = urlRedirect;
+
+        setTimeout(function() {
+        if (document.webkitHidden || document.hidden) {
+          // User switched to a different app or home screen
+          return;
+        }
+        window.location = fallbackUrl;
+      }, 2000); // Wait for 2 seconds before redirecting to fallback URL
+
+      // window.location = customSchema;
+      }
+
+      
     }
 
     
